@@ -1,0 +1,175 @@
+<head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+        <meta charset="utf-8">
+        <title>Bootply.com - Chat panel</title>
+        <title></title>
+        <meta name="generator" content="Bootply" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+        
+        <!--[if lt IE 9]>
+          <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link rel="shortcut icon" href="/bootstrap/img/favicon.ico">
+        <link rel="apple-touch-icon" href="/bootstrap/img/apple-touch-icon.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/bootstrap/img/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/bootstrap/img/apple-touch-icon-114x114.png">
+
+<style>
+.chat
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.chat li
+{
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+.chat li.left .chat-body
+{
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body
+{
+    margin-right: 60px;
+}
+
+
+.chat li .chat-body p
+{
+    margin: 0;
+    color: #777777;
+}
+
+.panel .slidedown .glyphicon, .chat .glyphicon
+{
+    margin-right: 5px;
+}
+
+.panel-body
+{
+    overflow-y: scroll;
+    height: 550px;
+}
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+</style>
+</head>
+<br/><br/><br/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body">
+                    <ul class="chat" id="js-turing-you-chat-list">
+					    <li class="right clearfix">
+					 		<span class="chat-img pull-right">
+                            	<img src="http://placehold.it/50/FA6F57/fff&amp;text=Bot" alt="User Avatar" class="img-circle">
+                        	</span>
+					        <div class="chat-body clearfix">
+					            <div class="header">
+					                <strong class="pull-right primary-font">Eugene</strong>
+					            </div>
+					            <p>
+					                Hey, Hi How are you?
+					            </p>
+					        </div>
+					    </li>                    
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <form id="js-turing-chat-form" action="#">
+    	                <div class="input-group">
+	                        <input id="js-question" type="text" class="form-control input-sm" placeholder="Type your message here...">
+							<span class="input-group-btn">
+	                            <button type="submit" 
+	                            class="btn btn-warning btn-sm" 
+	                            id="js-ask-turing-bot">
+	                             Send</button>
+	                        </span>
+	                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="jst-chat-turing-template" type="text/template">
+    <li class="right clearfix">
+ 		<span class="chat-img pull-right">
+        	<img src="http://placehold.it/50/FA6F57/fff&amp;text=Bot" alt="User Avatar" class="img-circle">
+    	</span>
+        <div class="chat-body clearfix">
+            <div class="header">
+                <strong class="pull-right primary-font"><%= user %></strong>
+            </div>
+            <p>
+                <%= message %>
+            </p>
+        </div>
+    </li>
+</script>
+
+<script id="jst-chat-template" type="text/template">
+    <li class="left clearfix">
+    	<span class="chat-img pull-left">
+                <img src="http://placehold.it/50/55C1E7/fff&amp;text=Me" alt="User Avatar" class="img-circle">
+        </span>
+        <div class="chat-body clearfix">
+            <div class="header">
+                <strong class="pull-left primary-font"><%= user %></strong>
+                <br/>
+            </div>
+            <p>
+                <%= message %>
+            </p>
+        </div>
+    </li>
+</script>
+
+<script src="http://www.bbus.in/static/jquery-2.1.0.min.js"></script>
+<script src="http://radiant-inlet-3244.herokuapp.com/static/js/lib/underscore-min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#js-turing-chat-form').on('submit', function(event) {
+        event.preventDefault();
+        var question = $('#js-question').val();
+        var chattemplate = _.template( $( '#jst-chat-template' ).html() )
+        var chathtml = chattemplate({'user': 'Me', 'message': question})
+        $('#js-turing-you-chat-list').append(chathtml);
+        $('#js-question').val('');
+        $.ajax({
+			  url: "/ask",
+			  data: {"question":question}
+			}).done(function(response) {
+		        var chattemplate = _.template( $( '#jst-chat-turing-template' ).html() )
+		        var chathtml = chattemplate({'user': 'Eugene', 'message': response})
+		        $('#js-turing-you-chat-list').append(chathtml);
+			});
+	    });
+});
+</script>
