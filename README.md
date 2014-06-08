@@ -1,4 +1,4 @@
 chat-with-eugene
 ================
 
-Chat with the bot that passed Turing Test
+Chat with Eugene Goostman, the bot that passed Turing Test
