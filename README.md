@@ -1,4 +1,4 @@
-talk-with-eugene
+chat-with-eugene
 ================
 
-Talk to the bot that passed Turing Test
+Chat with the bot that passed Turing Test
