@@ -161,6 +161,14 @@ $(document).ready(function() {
             url: "/ask/",
             data: {
                 "question": question
+            },
+            error: function(){
+                var chattemplate = _.template($('#jst-chat-turing-template').html())
+                var chathtml = chattemplate({
+                    'user': 'Eugene',
+                    'message': "I'm a little busy, will ping you later :)"
+                })
+                $('#js-turing-you-chat-list').append(chathtml);
             }
         }).done(function(response) {
             var chattemplate = _.template($('#jst-chat-turing-template').html())

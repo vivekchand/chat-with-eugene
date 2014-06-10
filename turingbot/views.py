@@ -15,5 +15,7 @@ def ask(request):
                                  '?request={}'.format(question.encode('utf-8')))
         message = response.content
     except:
+        message = None
+    if not message:
         message = "I'm a little busy now, will ping you later :)"
     return HttpResponse(message)
