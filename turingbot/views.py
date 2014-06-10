@@ -11,7 +11,7 @@ def index(request):
 def ask(request):
     question = request.GET.get('question')
     try:
-        response = requests.post('http://www.princetonai.com/bot/botanswer.do'
+        response = requests.post('http://default-environment-sdqm3mrmp4.elasticbeanstalk.com/AWSBot'
                                  '?request={}'.format(question))
         message = response.content
     except:
